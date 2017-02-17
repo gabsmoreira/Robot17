@@ -29,6 +29,9 @@ while True:
 						posicao = "Horizontal"
 					elif circles[i][0] in (range_x):
 						posicao = "Vertical"
+					else:
+						posicao = "Diagonal"
+
 
 			cv2.circle(img, (x, y), r, (0, 255, 0), 4)
 			cv2.rectangle(img, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
