@@ -37,7 +37,7 @@ while True:
 
 
     cv2.imshow("output", img)
-    #cv2.imshow("edges",edges)
+    cv2.imshow("edges",edges)
     k = cv2.waitKey(30) & 0xff
     if k == 27:
         break
