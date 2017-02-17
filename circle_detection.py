@@ -7,39 +7,40 @@ cap = cv2.VideoCapture(0)
 h = 6.5*37.795672
 f = 17.75
 font = cv2.FONT_HERSHEY_SIMPLEX
+range_x = 10
+range_y = 10
+
 while True:
-    ret, img = cap.read()
-    image =cv2.GaussianBlur(img,(5,5),10)
-    #output = image.copy()
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray,50,75)
-    minLineLength = 100
-    maxLineGap = 10
-    lines = cv2.HoughLinesP(edges,1,np.pi/180,100,minLineLength,maxLineGap)
+	ret, img = cap.read()
+	image =cv2.GaussianBlur(img,(5,5),10)
+	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
 
 
-    if lines is not None:
-        for x1,y1,x2,y2 in lines[0]:
-            cv2.line(img,(x1,y1),(x2,y2),(0,255,0),2)
-            #print(x1,y1,x2,y2)
+
+	if circles is not None:
+		circles = np.round(circles[0, :]).astype("int")
+		range_x = np.arange(circles[0][0]-10,circles[0][0]+10,1)
+		range_y = np.arange(circles[0][1]-10,circles[0][1]+10,1)
+		for (x, y, r) in circles:
+			for i in range (len(circles)):
+				for j in range (len(circles[i])):
+					if circles[i][1] in (range_y):
+						posicao = "Horizontal"
+					elif circles[i][0] in (range_x):
+						posicao = "Vertical"
+
+			cv2.circle(img, (x, y), r, (0, 255, 0), 4)
+			cv2.rectangle(img, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
+			hpix = 2*r
+			#print("Distancia em cm:",((f*h/hpix)))
+		cv2.putText(img,str((f*h/hpix)),(100,100), font, 1,(255,255,255),2)
+		cv2.putText(img,posicao,(650,450), font, 1,(0,0,255),2)
 
 
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
-
-    if circles is not None:
-        circles = np.round(circles[0, :]).astype("int")
-
-        for (x, y, r) in circles:
-            cv2.circle(img, (x, y), r, (0, 255, 0), 4)
-            hpix = 2*r
-            #print("Distancia em cm:",((f*h/hpix)))
-        cv2.putText(img,str((f*h/hpix)),(200,100), font, 2,(255,255,255),2)
-
-
-    cv2.imshow("output", img)
-    cv2.imshow("edges",edges)
-    k = cv2.waitKey(30) & 0xff
-    if k == 27:
-        break
+	cv2.imshow("output", img)
+	k = cv2.waitKey(30) & 0xff
+	if k == 27:
+		break
 cap.release()
 cv2.destroyAllWindows()
