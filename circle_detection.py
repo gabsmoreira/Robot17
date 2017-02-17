@@ -7,8 +7,7 @@ cap = cv2.VideoCapture(0)
 h = 6.5*37.795672
 f = 17.75
 font = cv2.FONT_HERSHEY_SIMPLEX
-range_x = 10
-range_y = 10
+
 
 while True:
 	ret, img = cap.read()
@@ -37,7 +36,7 @@ while True:
 			cv2.rectangle(img, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
 			hpix = 2*r
 			#print("Distancia em cm:",((f*h/hpix)))
-		cv2.putText(img,str((f*h/hpix)),(100,100), font, 1,(255,255,255),2)
+		cv2.putText(img,str((f*h/hpix)),(100,100), font, 1,(0,0,255),2)
 		cv2.putText(img,posicao,(650,450), font, 1,(0,0,255),2)
 
 
