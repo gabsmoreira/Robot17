@@ -11,13 +11,7 @@ import sys, select, termios, tty
 
 
 def check_tennis_ball(camera):
-
 	
-	font = cv2.FONT_HERSHEY_SIMPLEX
-	range_R = np.arange(40,205)
-	range_G = np.arange(70,255)
-	range_B = np.arange(0,60)
-
 	lower_green = np.array([25,60,100])
 	upper_green = np.array([100,255,255])
 	ret, img = camera.read()
