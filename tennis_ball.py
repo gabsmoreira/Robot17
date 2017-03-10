@@ -11,7 +11,7 @@ import sys, select, termios, tty
 
 
 def check_tennis_ball(camera):
-	
+
 	lower_green = np.array([25,60,100])
 	upper_green = np.array([100,255,255])
 	ret, img = camera.read()
@@ -33,7 +33,6 @@ def check_tennis_ball(camera):
 						cv2.rectangle(img, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
 						return [x,r]
 
-	cv2.imshow("output",img)
 
 
 
@@ -75,10 +74,10 @@ def forward():
 
 def position(x,r,camera):
 	ret, img = camera.read()
-	if  438>x>410:
+	if  438 > x > 410:
 		if r < 130:
 			forward()
-		if r>=120:
+		if r >= 120:
 			return 1
 	elif x < 404:
 		turn_right()
